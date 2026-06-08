@@ -6,12 +6,13 @@ void cadastrar(char cpf[][20], char nome[][50], char email[][50],
     char cpfTerc[][20], char nomeTerc[][50],
     char dataNascTerc[][20], int sexo[],
     int tipoPlano[], char dataVencimento[][20],
-    int i);
+    float valorPlano[], int idade[], int i);
 
 int main() {
     char cpf[30][20], nome[30][50], email[30][50], dataNasc[30][20], telefone[30][20], dataVencimento[30][20];
     char cpfTerc[30][20], nomeTerc[30][50], dataNascTerc[30][20];
-    int sexo[30], tipoPlano[30];
+    int sexo[30], tipoPlano[30], idade[30];
+    float valorPlano[30];
 
     int i = 0;
     int escolha = -1;
@@ -42,7 +43,7 @@ int main() {
                 cpfTerc, nomeTerc,
                 dataNascTerc, sexo,
                 tipoPlano, dataVencimento,
-                i
+                valorPlano, idade, i
             );
 
             i++;

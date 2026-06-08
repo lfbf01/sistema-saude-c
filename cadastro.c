@@ -1,12 +1,28 @@
 #include <stdio.h>
 #include <string.h>
 
+int calcularIdade(char data[])
+{
+    int dia, mes, ano;
+    int dAtual = 7, mAtual = 6, aAtual = 2026;
+
+    sscanf(data, "%d/%d/%d", &dia, &mes, &ano);
+
+    int idade = aAtual - ano;
+
+    if (mes > mAtual || (mes == mAtual && dia > dAtual)) {
+        idade--;
+    }
+
+    return idade;
+}
+
 void cadastrar(char cpf[][20], char nome[][50], char email[][50],
     char dataNasc[][20], char telefone[][20],
     char cpfTerc[][20], char nomeTerc[][50],
     char dataNascTerc[][20], int sexo[],
     int tipoPlano[], char dataVencimento[][20],
-    int i) {
+    float valorPlano[], int idade[], int i) {
             printf("\n--- Cadastro do Cliente %d ---\n", i + 1);
             
             printf("Insira o CPF do cliente: ");
@@ -34,6 +50,8 @@ void cadastrar(char cpf[][20], char nome[][50], char email[][50],
             fgets(dataNasc[i], 20, stdin);
             dataNasc[i][strcspn(dataNasc[i], "\n")] = 0;
 
+            idade[i] = calcularIdade(dataNasc[i]);
+
             printf("Insira o telefone do cliente: ");
             fgets(telefone[i], 20, stdin);
             telefone[i][strcspn(telefone[i], "\n")] = 0;
@@ -50,7 +68,7 @@ void cadastrar(char cpf[][20], char nome[][50], char email[][50],
             fgets(dataNascTerc[i], 20, stdin);
             dataNascTerc[i][strcspn(dataNascTerc[i], "\n")] = 0;
 
-            printf("Digite o tipo do plano de saúde (1 - Ouro / 2 - Diamante / 3 - Prata / 4 - Esmeralda): ");
+            printf("Digite o tipo do plano de saúde (1 - Prata / 2 - Ouro / 3 - Diamante / 4 - Esmeralda): ");
             do{
                 scanf("%d", &tipoPlano[i]);
                 getchar();
@@ -58,8 +76,32 @@ void cadastrar(char cpf[][20], char nome[][50], char email[][50],
                     printf("Opção invalida. Tente novamente: ");
                 }
             } while(tipoPlano[i] < 1 || tipoPlano[i] > 4);
-
+            if(tipoPlano == 1){
+                valorPlano[i] = 200;
+            }
+            else if(tipoPlano == 2){
+                valorPlano[i] = 300;
+            }
+            else if(tipoPlano == 3){
+                valorPlano[i] = 400;
+            }
+            else{
+                valorPlano[i] = 500;
+            }
+            
             printf("Insira a data do vencimento do plano de saúde: ");
             fgets(dataVencimento[i], 20, stdin);
             dataVencimento[i][strcspn(dataVencimento[i], "\n")] = 0;
+
+            if(idade < 13){
+                valorPlano[i] = valorPlano[i] - (valorPlano[i] * 0.3);
+            }
+            if(sexo[i] == 1 && idade >= 13 && idade < 35){
+                valorPlano[i] = valorPlano[i] + (valorPlano[i] * 0.3);
+            }
+            if(idade >= 60){
+                valorPlano[i] = valorPlano[i] + (valorPlano[i] * 0.4);
+            }
+
+
 }
