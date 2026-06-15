@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include "cliente.h"
+
 
 int calcularIdade(char dataNasc[])
 {
@@ -17,101 +19,98 @@ int calcularIdade(char dataNasc[])
     return idade;
 }
 
-void cadastrar(char cpf[][20], char nome[][50], char email[][50],
-    char dataNasc[][20], char telefone[][20],
-    char cpfTerc[][10][20], char nomeTerc[][10][50],
-    char dataNascTerc[][10][20], int sexo[],
-    int tipoPlano[], char dataVencimento[][20],
-    float valorPlano[], int idade[], int qtdDependentes[], int i) {
+void cadastrar(Cliente clientes[], int i) {
             printf("\n--- Cadastro do Cliente %d ---\n", i + 1);
             
             printf("Insira o CPF do cliente: ");
-            fgets(cpf[i], 20, stdin);
-            cpf[i][strcspn(cpf[i], "\n")] = 0;
+            fgets(clientes[i].cpf, 20, stdin);
+            clientes[i].cpf[strcspn(clientes[i].cpf, "\n")] = 0;
 
             printf("Insira o nome do cliente: ");
-            fgets(nome[i], 50, stdin);
-            nome[i][strcspn(nome[i], "\n")] = 0;
+            fgets(clientes[i].nome, 50, stdin);
+            clientes[i].nome[strcspn(clientes[i].nome, "\n")] = 0;
 
             printf("Digite o gênero do cliente (1-fem/2-masc): ");
             do{
-                scanf("%d", &sexo[i]);
+                scanf("%d", &clientes[i].sexo);
                 getchar();
-                if(sexo[i] != 1 && sexo[i] != 2){
+                if(clientes[i].sexo != 1 && clientes[i].sexo != 2){
                     printf("Opção invalida. Tente novamente: ");
                 }
-            } while(sexo[i] != 1 && sexo[i] != 2);
+            } while(clientes[i].sexo != 1 && clientes[i].sexo != 2);
 
             printf("Insira o email do cliente: ");
-            fgets(email[i], 50, stdin);
-            email[i][strcspn(email[i], "\n")] = 0;
+            fgets(clientes[i].email, 50, stdin);
+            clientes[i].email[strcspn(clientes[i].email, "\n")] = 0;
 
             printf("Insira a data de nascimento do cliente (dd/mm/aaaa): ");
-            fgets(dataNasc[i], 20, stdin);
-            dataNasc[i][strcspn(dataNasc[i], "\n")] = 0;
+            fgets(clientes[i].dataNasc, 20, stdin);
+            clientes[i].dataNasc[strcspn(clientes[i].dataNasc, "\n")] = 0;
 
-            idade[i] = calcularIdade(dataNasc[i]);
+            clientes[i].idade = calcularIdade(clientes[i].dataNasc);
 
             printf("Insira o telefone do cliente: ");
-            fgets(telefone[i], 20, stdin);
-            telefone[i][strcspn(telefone[i], "\n")] = 0;
+            fgets(clientes[i].telefone, 20, stdin);
+            clientes[i].telefone[strcspn(clientes[i].telefone, "\n")] = 0;
 
             printf("Quantos dependentes você deseja cadastrar? ");
-            scanf("%d", &qtdDependentes[i]);
+            scanf("%d", &clientes[i].qtdDependentes);
             getchar();
 
-            for(int j = 0; j < qtdDependentes[i]; j++){
+            for(int j = 0; j < clientes[i].qtdDependentes; j++){
 
                 printf("Insira o CPF do dependente %d: ", j + 1);
-                fgets(cpfTerc[i][j], 20, stdin);
-                cpfTerc[i][j][strcspn(cpfTerc[i][j], "\n")] = 0;
+                fgets(clientes[i].cpfTerc[j], 20, stdin);
+                clientes[i].cpfTerc[j][strcspn(clientes[i].cpfTerc[j], "\n")] = 0;
 
                 printf("Insira o nome do dependente %d: ", j + 1);
-                fgets(nomeTerc[i][j], 50, stdin);
-                nomeTerc[i][j][strcspn(nomeTerc[i][j], "\n")] = 0;
+                fgets(clientes[i].nomeTerc[j], 50, stdin);
+                clientes[i].nomeTerc[j][strcspn(clientes[i].nomeTerc[j], "\n")] = 0;
 
                 printf("Insira a data de nascimento do dependente %d: ", j + 1);
-                fgets(dataNascTerc[i][j], 20, stdin);
-                dataNascTerc[i][j][strcspn(dataNascTerc[i][j], "\n")] = 0;
+                fgets(clientes[i].dataNascTerc[j], 20, stdin);
+                clientes[i].dataNascTerc[j][strcspn(clientes[i].dataNascTerc[j], "\n")] = 0;
             }
 
             printf("Digite o tipo do plano de saúde (1 - Prata / 2 - Ouro / 3 - Diamante / 4 - Esmeralda): ");
             do{
-                scanf("%d", &tipoPlano[i]);
+                scanf("%d", &clientes[i].tipoPlano);
                 getchar();
-                if(tipoPlano[i] < 1 || tipoPlano[i] > 4){
+                if(clientes[i].tipoPlano < 1 || clientes[i].tipoPlano > 4){
                     printf("Opção invalida. Tente novamente: ");
                 }
-            } while(tipoPlano[i] < 1 || tipoPlano[i] > 4);
-            if(tipoPlano[i] == 1){
-                valorPlano[i] = 200;
+            } while(clientes[i].tipoPlano < 1 || clientes[i].tipoPlano > 4);
+            if(clientes[i].tipoPlano == 1){
+                clientes[i].valorPlano = 200;
             }
-            else if(tipoPlano[i] == 2){
-                valorPlano[i] = 300;
+            else if(clientes[i].tipoPlano == 2){
+                clientes[i].valorPlano = 300;
             }
-            else if(tipoPlano[i] == 3){
-                valorPlano[i] = 400;
+            else if(clientes[i].tipoPlano == 3){
+                clientes[i].valorPlano = 400;
             }
             else{
-                valorPlano[i] = 500;
+                clientes[i].valorPlano = 500;
             }
             
             printf("Insira a data do vencimento do plano de saúde: ");
-            fgets(dataVencimento[i], 20, stdin);
-            dataVencimento[i][strcspn(dataVencimento[i], "\n")] = 0;
+            fgets(clientes[i].dataVencimento, 20, stdin);
+            clientes[i].dataVencimento[strcspn(clientes[i].dataVencimento, "\n")] = 0;
 
-            if(idade[i] < 13){
-                valorPlano[i] = valorPlano[i] - (valorPlano[i] * 0.3);
+            if(clientes[i].idade < 13){
+                clientes[i].valorPlano = clientes[i].valorPlano - (clientes[i].valorPlano * 0.3);
             }
-            if(sexo[i] == 1 && idade[i] >= 13 && idade[i] < 35){
-                valorPlano[i] = valorPlano[i] + (valorPlano[i] * 0.3);
+            if(clientes[i].sexo == 1 && clientes[i].idade >= 13 && clientes[i].idade < 35){
+                clientes[i].valorPlano = clientes[i].valorPlano + (clientes[i].valorPlano * 0.3);
             }
-            if(idade[i] >= 60){
-                valorPlano[i] = valorPlano[i] + (valorPlano[i] * 0.4);
+            if(clientes[i].idade >= 60){
+                clientes[i].valorPlano = clientes[i].valorPlano + (clientes[i].valorPlano * 0.4);
             }
-            if(qtdDependentes[i] > 1){
-            valorPlano[i] = valorPlano[i] - (valorPlano[i] * 0.2);
+            if(clientes[i].qtdDependentes > 1){
+            clientes[i].valorPlano = clientes[i].valorPlano - (clientes[i].valorPlano * 0.2);
             }
+
+            printf("\nCliente cadastrado com sucesso!\n");
 
 
 }

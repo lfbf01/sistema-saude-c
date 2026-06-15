@@ -1,11 +1,7 @@
 #include <stdio.h>
+#include "cliente.h"
 
-void listagemGeral(
-    char cpf[][20], char nome[][50], char telefone[][20],
-    int sexo[], int idade[], int tipoPlano[],
-    int qtdDependentes[], float valorPlano[],
-    char dataVencimento[][20], int i)
-{
+void listagemGeral(Cliente clientes[], int i){
     for(int k = 0; k < 130; k++){
         printf("=");
     }
@@ -26,17 +22,20 @@ void listagemGeral(
     for(int j = 0; j < i; j++){
 
         printf("%-15s %-25s %-6s %-15s %-6d %-12s %-12d R$%-10.2f %-12s\n",
-            cpf[j],
-            nome[j],
-            sexo[j] == 1 ? "F" : "M",
-            telefone[j],
-            idade[j],
-            tipoPlano[j] == 1 ? "Prata" :
-            tipoPlano[j] == 2 ? "Ouro" :
-            tipoPlano[j] == 3 ? "Diamante" : "Esmeralda",
-            qtdDependentes[j],
-            valorPlano[j],
-            dataVencimento[j]);
+            clientes[j].cpf,
+            clientes[j].nome,
+            clientes[j].sexo == 1 ? "F" : "M",
+            clientes[j].telefone,
+            clientes[j].idade,
+            clientes[j].tipoPlano == 1 ? "Prata" :
+            clientes[j].tipoPlano == 2 ? "Ouro" :
+            clientes[j].tipoPlano == 3 ? "Diamante" : "Esmeralda",
+            clientes[j].qtdDependentes,
+            clientes[j].valorPlano,
+            clientes[j].dataVencimento);
     }
+
+    printf("\nTecle ENTER para voltar ao menu...");
+    getchar();
     
 }
