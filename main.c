@@ -5,6 +5,7 @@
 void cadastrar(Cliente clientes[], int i);
 void listagemGeral(Cliente clientes[], int i);
 void listarVencimentos(Cliente clientes[], int i);
+void editarCliente(Cliente clientes[], int i);
 
 int main()
 {
