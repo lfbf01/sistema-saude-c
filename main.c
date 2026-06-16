@@ -6,6 +6,7 @@ void cadastrar(Cliente clientes[], int i);
 void listagemGeral(Cliente clientes[], int i);
 void listarVencimentos(Cliente clientes[], int i);
 void editarCliente(Cliente clientes[], int i);
+void removerCliente(Cliente clientes[], int *qtdClientes);
 
 int main()
 {
@@ -42,6 +43,17 @@ int main()
             cadastrar(clientes, i);
             i++;
         }
+        else if (escolha == 2)
+        {
+            editarCliente(clientes, i);
+        }
+
+        else if (escolha == 3)
+        {
+            removerCliente(clientes, &i);
+        }
+        
+        
 
         else if(escolha == 4)
         {
