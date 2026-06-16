@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "cliente.h"
 
-void listarPorPlano(Cliente clientes[], int qtdClientes)
+void listarPorPlano(Cliente clientes[], int i)
 {
     int plano;
     int encontrou = 0;
@@ -28,28 +28,28 @@ void listarPorPlano(Cliente clientes[], int qtdClientes)
            "VALOR",
            "VENCIMENTO");
 
-    for(int i = 0; i < qtdClientes; i++)
+    for(int j = 0; j < i; j++)
     {
-        if(clientes[i].tipoPlano == plano)
+        if(clientes[j].tipoPlano == plano)
         {
             encontrou = 1;
 
             printf("%-15s %-25s %-6s %-15s %-6d %-12s %-12d R$%-10.2f %-12s\n",
-                   clientes[i].cpf,
-                   clientes[i].nome,
-                   clientes[i].sexo == 1 ? "F" : "M",
-                   clientes[i].telefone,
-                   clientes[i].idade,
-                   clientes[i].tipoPlano == 1 ? "Prata" :
-                   clientes[i].tipoPlano == 2 ? "Ouro" :
-                   clientes[i].tipoPlano == 3 ? "Diamante" : "Esmeralda",
-                   clientes[i].qtdDependentes,
-                   clientes[i].valorPlano,
-                   clientes[i].dataVencimento);
+                   clientes[j].cpf,
+                   clientes[j].nome,
+                   clientes[j].sexo == 1 ? "F" : "M",
+                   clientes[j].telefone,
+                   clientes[j].idade,
+                   clientes[j].tipoPlano == 1 ? "Prata" :
+                   clientes[j].tipoPlano == 2 ? "Ouro" :
+                   clientes[j].tipoPlano == 3 ? "Diamante" : "Esmeralda",
+                   clientes[j].qtdDependentes,
+                   clientes[j].valorPlano,
+                   clientes[j].dataVencimento);
         }
     }
 
-    if(!encontrou)
+    if(encontrou == 0)
     {
         printf("Nenhum cliente encontrado para este plano.\n");
     }

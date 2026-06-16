@@ -6,16 +6,17 @@ void cadastrar(Cliente clientes[], int i);
 void listagemGeral(Cliente clientes[], int i);
 void listarVencimentos(Cliente clientes[], int i);
 void editarCliente(Cliente clientes[], int i);
-void removerCliente(Cliente clientes[], int *qtdClientes);
+void removerCliente(Cliente clientes[], int *i);
+void listarPorPlano(Cliente clientes[], int i);
 
 int main()
 {
     Cliente clientes[30];
 
-    int i = 0;
+    int i = 0; //Quantidade de clientes
     int escolha = -1;
 
-    while(escolha != 0 && i < 30)
+    while(escolha != 0)
     {
         do{
             printf("\n--- Núcleo Seguros ---\n");
@@ -40,8 +41,16 @@ int main()
 
         if(escolha == 1)
         {
-            cadastrar(clientes, i);
-            i++;
+            if(i >= 30)
+            {
+                printf("\nLimite maximo de clientes atingido (30 clientes).\n");
+                printf("Nao e possivel cadastrar novos clientes.\n");
+            }
+            else
+            {
+                cadastrar(clientes, i);
+                i++;
+            }
         }
         else if (escolha == 2)
         {
@@ -52,9 +61,6 @@ int main()
         {
             removerCliente(clientes, &i);
         }
-        
-        
-
         else if(escolha == 4)
         {
             if(i == 0)
@@ -65,6 +71,10 @@ int main()
             {
                 listagemGeral(clientes, i);
             }
+        }
+        else if(escolha == 5)
+        {
+            listarPorPlano(clientes, i);
         }
         else if(escolha == 6)
         {

@@ -170,7 +170,9 @@ void editarCliente(Cliente clientes[], int i)
         printf("4 - Email: %s\n", clientes[posicao].email);
         printf("5 - Data de Nascimento: %s\n", clientes[posicao].dataNasc);
         printf("6 - Telefone: %s\n", clientes[posicao].telefone);
-        printf("7 - Plano: %d\n", clientes[posicao].tipoPlano);
+        printf("7 - Plano: %d\n", clientes[posicao].tipoPlano == 1 ? "Prata" :
+                                  clientes[posicao].tipoPlano == 2 ? "Ouro" :
+                                  clientes[posicao].tipoPlano == 3 ? "Diamante" : "Esmeralda");
         printf("8 - Data de Vencimento: %s\n",
                clientes[posicao].dataVencimento);
         printf("9 - Dependentes\n");
@@ -411,11 +413,11 @@ void editarCliente(Cliente clientes[], int i)
     } while (opcao != 0);
 }
 
-void removerCliente(Cliente clientes[], int *qtdClientes)
+void removerCliente(Cliente clientes[], int *i)
 {
     int posicao;
 
-    if (*qtdClientes <= 0)
+    if (*i <= 0)
     {
         printf("\nSEM CLIENTES CADASTRADOS\n");
         return;
@@ -427,29 +429,29 @@ void removerCliente(Cliente clientes[], int *qtdClientes)
 
     printf("\n--- CLIENTES CADASTRADOS ---\n");
 
-    for (int j = 0; j < *qtdClientes; j++)
+    for (int j = 0; j < *i; j++)
     {
         printf("%d - %s\n", j + 1, clientes[j].nome);
     }
 
-    printf("\nDigite o numero do cliente que deseja editar: \nDigite 0 para voltar\n");
+    printf("\nDigite o numero do cliente que deseja remover: \nDigite 0 para voltar\n");
     scanf("%d", &posicao);
     getchar();
 
     posicao--;
 
-    if (posicao < 0 || posicao >= *qtdClientes)
+    if (posicao < 0 || posicao >= *i)
     {
         printf("\nCliente Invalido \n");
         return;
     }
 
-    for (int j = posicao; j < *qtdClientes - 1; j++)
+    for (int j = posicao; j < *i - 1; j++)
     {
         clientes[j] = clientes[j + 1];
     }
 
-    (*qtdClientes)--;
+    (*i)--;
 
     printf("\nCliente removido com sucesso!\n");
 }
