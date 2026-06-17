@@ -6,7 +6,7 @@
 int calcularIdade(char dataNasc[])
 {
     int dia, mes, ano;
-    int dAtual = 7, mAtual = 6, aAtual = 2026;
+    int dAtual = 17, mAtual = 6, aAtual = 2026;
 
     sscanf(dataNasc, "%d/%d/%d", &dia, &mes, &ano);
 
@@ -38,7 +38,8 @@ int validarCPF(char cpf[])
     return 1;
 }
 
-int verificarNome(char nome[]){
+int verificarNome(char nome[])
+{
     for (int i = 0; i < 11; i++)
     {
         if (isdigit(nome[i]))
@@ -102,26 +103,49 @@ int verificarData(char dataNasc[])
     int tamdata = strlen(dataNasc);
 
     if (tamdata != 10)
-        {
-            return 0;
-        }
-        
+    {
+        printf("Data Invalida.\n");
+        return 0;
+    }
+
     for (int i = 0; i < 10; i++)
     {
         if (i == 2 || i == 5)
         {
             if (dataNasc[i] != '/')
             {
+                printf("Data invalida.\n");
                 return 0;
             }
         }
-        else{ 
-        if (!isdigit(dataNasc[i]))
+        else
         {
-            return 0;
-        }
+            if (!isdigit(dataNasc[i]))
+            {
+                printf("Data Invalida. Digite apenas numeros.\n");
+                return 0;
+            }
         }
     }
+
+    int dia, mes, ano;
+
+    sscanf(dataNasc, "%d/%d/%d", &dia, &mes, &ano);
+
+    if (mes < 1 || mes > 12 || dia < 1 || dia > 31)
+    {
+        printf("Data Invalida.\n");
+        return 0;
+    }
+
+    if (ano > 2026 ||
+        (ano == 2026 && mes > 6) ||
+        (ano == 2026 && mes == 6 && dia > 17))
+    {
+        printf("Data invalida! Deve ser igual ou anterior a 17/06/2026.\n");
+        return 0;
+    }
+
     return 1;
 }
 
@@ -133,7 +157,7 @@ int verificarTelefone(char telefone[])
     {
         return 0;
     }
-    
+
     for (int i = 0; i < tamTelefone; i++)
     {
         if (!isdigit(telefone[i]))
@@ -150,26 +174,49 @@ int verificarDataVenc(char dataVenc[])
     int tamdata = strlen(dataVenc);
 
     if (tamdata != 10)
-        {
-            return 0;
-        }
-        
+    {
+        printf("Data Invalida.\n");
+        return 0;
+    }
+
     for (int i = 0; i < 10; i++)
     {
         if (i == 2 || i == 5)
         {
             if (dataVenc[i] != '/')
             {
+                printf("Data Invalida.\n");
                 return 0;
             }
         }
-        else{ 
-        if (!isdigit(dataVenc[i]))
+        else
         {
-            return 0;
-        }
+            if (!isdigit(dataVenc[i]))
+            {
+                printf("Data Invalida. Digite apenas numeros.\n");
+                return 0;
+            }
         }
     }
+
+    int dia, mes, ano;
+
+    sscanf(dataVenc, "%d/%d/%d", &dia, &mes, &ano);
+
+    if (mes < 1 || mes > 12 || dia < 1 || dia > 31)
+    {
+        printf("Data invalida!\n");
+        return 0;
+    }
+
+    if (ano < 2026 ||
+        (ano == 2026 && mes < 6) ||
+        (ano == 2026 && mes == 6 && dia < 17))
+    {
+        printf("Data invalida! Deve ser igual ou posterior a 17/06/2026.\n");
+        return 0;
+    }
+
     return 1;
 }
 
@@ -190,10 +237,6 @@ void cadastrar(Cliente clientes[], int i)
         }
 
     } while (!validarCPF(clientes[i].cpf));
-
-    printf("Insira o nome do cliente: ");
-    fgets(clientes[i].nome, 50, stdin);
-    clientes[i].nome[strcspn(clientes[i].nome, "\n")] = 0;
 
     do
     {
@@ -239,11 +282,6 @@ void cadastrar(Cliente clientes[], int i)
         fgets(clientes[i].dataNasc, 20, stdin);
         clientes[i].dataNasc[strcspn(clientes[i].dataNasc, "\n")] = 0;
 
-        if (!verificarData(clientes[i].dataNasc))
-        {
-            printf("Data Invalida. Digite novamente.\n");
-        }
-
     } while (!verificarData(clientes[i].dataNasc));
 
     clientes[i].idade = calcularIdade(clientes[i].dataNasc);
@@ -267,7 +305,8 @@ void cadastrar(Cliente clientes[], int i)
 
     for (int j = 0; j < clientes[i].qtdDependentes; j++)
     {
-        do{
+        do
+        {
             printf("Insira o CPF do dependente %d: ", j + 1);
             fgets(clientes[i].cpfTerc[j], 20, stdin);
             clientes[i].cpfTerc[j][strcspn(clientes[i].cpfTerc[j], "\n")] = 0;
@@ -279,7 +318,8 @@ void cadastrar(Cliente clientes[], int i)
 
         } while (!validarCPF(clientes[i].cpfTerc[j]));
 
-        do{
+        do
+        {
             printf("Insira o nome do dependente %d: ", j + 1);
             fgets(clientes[i].nomeTerc[j], 50, stdin);
             clientes[i].nomeTerc[j][strcspn(clientes[i].nomeTerc[j], "\n")] = 0;
@@ -291,15 +331,11 @@ void cadastrar(Cliente clientes[], int i)
 
         } while (!verificarNome(clientes[i].nomeTerc[j]));
 
-        do{
+        do
+        {
             printf("Insira a data de nascimento do dependente %d: ", j + 1);
             fgets(clientes[i].dataNascTerc[j], 20, stdin);
             clientes[i].dataNascTerc[j][strcspn(clientes[i].dataNascTerc[j], "\n")] = 0;
-
-            if (!verificarData(clientes[i].dataNascTerc[j]))
-            {
-                printf("Data Invalida. Digite novamente.\n");
-            }
 
         } while (!verificarData(clientes[i].dataNascTerc[j]));
     }
@@ -336,11 +372,6 @@ void cadastrar(Cliente clientes[], int i)
         printf("Insira a data do vencimento do plano de saúde (dd/mm/aaaa): ");
         fgets(clientes[i].dataVencimento, 20, stdin);
         clientes[i].dataVencimento[strcspn(clientes[i].dataVencimento, "\n")] = 0;
-
-        if (!verificarData(clientes[i].dataVencimento))
-        {
-            printf("Data Invalida. Digite novamente.\n");
-        }
 
     } while (!verificarDataVenc(clientes[i].dataVencimento));
 
@@ -382,9 +413,15 @@ void editarCliente(Cliente clientes[], int i)
         printf("%d - %s\n", j + 1, clientes[j].nome);
     }
 
-    printf("\nDigite o numero do cliente que deseja editar: ");
+    printf("\nDigite o numero do cliente que deseja editar(Digite 0 para voltar): ");
     scanf("%d", &posicao);
     getchar();
+
+    if (posicao == 0)
+    {
+        printf("\nVoltando...\n");
+        return;
+    }
 
     posicao--;
 
@@ -408,7 +445,8 @@ void editarCliente(Cliente clientes[], int i)
         printf("5 - Data de Nascimento: %s\n", clientes[posicao].dataNasc);
         printf("6 - Telefone: %s\n", clientes[posicao].telefone);
         printf("7 - Plano: %s\n", clientes[posicao].tipoPlano == 1 ? "Prata" : clientes[posicao].tipoPlano == 2 ? "Ouro"
-        : clientes[posicao].tipoPlano == 3   ? "Diamante" : "Esmeralda");
+                                                                           : clientes[posicao].tipoPlano == 3   ? "Diamante"
+                                                                                                                : "Esmeralda");
         printf("8 - Data de Vencimento: %s\n",
                clientes[posicao].dataVencimento);
         printf("9 - Dependentes\n");
@@ -439,17 +477,18 @@ void editarCliente(Cliente clientes[], int i)
 
         case 2:
 
-            do{
+            do
+            {
                 printf("Novo nome: ");
-                fgets(clientes[i].nome, 50, stdin);
-                clientes[i].nome[strcspn(clientes[i].nome, "\n")] = 0;
+                fgets(clientes[posicao].nome, 50, stdin);
+                clientes[posicao].nome[strcspn(clientes[posicao].nome, "\n")] = 0;
 
-                if (!verificarNome(clientes[i].nome))
+                if (!verificarNome(clientes[posicao].nome))
                 {
                     printf("Nome invalido! Digite apenas letras.\n");
                 }
 
-            } while (!verificarNome(clientes[i].nome));
+            } while (!verificarNome(clientes[posicao].nome));
             break;
 
         case 3:
@@ -489,11 +528,6 @@ void editarCliente(Cliente clientes[], int i)
                 fgets(clientes[posicao].dataNasc, 20, stdin);
                 clientes[posicao].dataNasc[strcspn(clientes[posicao].dataNasc, "\n")] = 0;
 
-                if (!verificarData(clientes[posicao].dataNasc))
-                {
-                    printf("Data Invalida. Digite novamente.\n");
-                }
-
             } while (!verificarData(clientes[posicao].dataNasc));
 
             clientes[posicao].idade =
@@ -503,7 +537,8 @@ void editarCliente(Cliente clientes[], int i)
 
         case 6:
 
-            do{
+            do
+            {
                 printf("Novo telefone: ");
                 fgets(clientes[posicao].telefone, 20, stdin);
                 clientes[posicao].telefone[strcspn(clientes[posicao].telefone, "\n")] = 0;
@@ -542,15 +577,11 @@ void editarCliente(Cliente clientes[], int i)
 
         case 8:
 
-            do{
+            do
+            {
                 printf("Nova data do vencimento do plano de saúde (dd/mm/aaaa): ");
                 fgets(clientes[posicao].dataVencimento, 20, stdin);
                 clientes[posicao].dataVencimento[strcspn(clientes[posicao].dataVencimento, "\n")] = 0;
-
-                if (!verificarData(clientes[posicao].dataVencimento))
-                {
-                    printf("Data Invalida. Digite novamente.\n");
-                }
 
             } while (!verificarDataVenc(clientes[posicao].dataVencimento));
 
@@ -593,7 +624,8 @@ void editarCliente(Cliente clientes[], int i)
                     break;
                 }
 
-                do{
+                do
+                {
                     printf("Insira o CPF do dependente: ");
                     fgets(clientes[posicao].cpfTerc[posdep], 20, stdin);
                     clientes[posicao].cpfTerc[posdep][strcspn(clientes[posicao].cpfTerc[posdep], "\n")] = 0;
@@ -605,7 +637,8 @@ void editarCliente(Cliente clientes[], int i)
 
                 } while (!validarCPF(clientes[posicao].cpfTerc[posdep]));
 
-                do{
+                do
+                {
                     printf("Insira o nome do dependente: ");
                     fgets(clientes[posicao].nomeTerc[posdep], 50, stdin);
                     clientes[posicao].nomeTerc[posdep][strcspn(clientes[posicao].nomeTerc[posdep], "\n")] = 0;
@@ -617,15 +650,11 @@ void editarCliente(Cliente clientes[], int i)
 
                 } while (!verificarNome(clientes[posicao].nomeTerc[posdep]));
 
-                do{
+                do
+                {
                     printf("Insira a data de nascimento do dependente: ");
                     fgets(clientes[posicao].dataNascTerc[posdep], 20, stdin);
                     clientes[posicao].dataNascTerc[posdep][strcspn(clientes[posicao].dataNascTerc[posdep], "\n")] = 0;
-
-                    if (!verificarData(clientes[posicao].dataNascTerc[posdep]))
-                    {
-                        printf("Data Invalida. Digite novamente.\n");
-                    }
 
                 } while (!verificarData(clientes[posicao].dataNascTerc[posdep]));
 
@@ -664,19 +693,74 @@ void editarCliente(Cliente clientes[], int i)
                     break;
                 }
 
-                printf("Novo CPF: ");
-                fgets(clientes[posicao].cpfTerc[dep], 20, stdin);
-                clientes[posicao].cpfTerc[dep][strcspn(clientes[posicao].cpfTerc[dep], "\n")] = 0;
+                int opcoes;
 
-                printf("Novo Nome: ");
-                fgets(clientes[posicao].nomeTerc[dep], 50, stdin);
-                clientes[posicao].nomeTerc[dep][strcspn(clientes[posicao].nomeTerc[dep], "\n")] = 0;
+                do
+                {
 
-                printf("Nova Data de Nascimento: ");
-                fgets(clientes[posicao].dataNascTerc[dep], 20, stdin);
-                clientes[posicao].dataNascTerc[dep][strcspn(clientes[posicao].dataNascTerc[dep], "\n")] = 0;
+                    printf("\n========================================");
+                    printf("\nEDITANDO DEPENDENTE: %s", clientes[posicao].nomeTerc[dep]);
+                    printf("\n========================================\n");
 
-                printf("\nDependente atualizado com sucesso!\n");
+                    printf("1 - CPF: %s\n", clientes[posicao].cpfTerc[dep]);
+                    printf("2 - Nome: %s\n", clientes[posicao].nomeTerc[dep]);
+                    printf("3 - Data de Nascimento: %s\n", clientes[posicao].dataNascTerc[dep]);
+                    printf("0 - Voltar\n");
+                    printf("Escolha um número de 1 a 3 (0 para voltar):");
+
+                    scanf("%d", &opcoes);
+                    getchar();
+
+                    switch (opcoes)
+                    {
+                    case 0:
+                        printf("\nVoltando...\n");
+                        break;
+
+                    case 1:
+                        do
+                        {
+                            printf("Novo CPF do dependente: ");
+                            fgets(clientes[posicao].cpfTerc[dep], 20, stdin);
+                            clientes[posicao].cpfTerc[dep][strcspn(clientes[posicao].cpfTerc[dep], "\n")] = 0;
+
+                            if (!validarCPF(clientes[posicao].cpfTerc[dep]))
+                            {
+                                printf("CPF invalido! Digite exatamente 11 numeros.\n");
+                            }
+
+                        } while (!validarCPF(clientes[posicao].cpfTerc[dep]));
+                        break;
+                    case 2:
+                        do
+                        {
+                            printf("Novo nome do dependente: ");
+                            fgets(clientes[posicao].nomeTerc[dep], 50, stdin);
+                            clientes[posicao].nomeTerc[dep][strcspn(clientes[posicao].nomeTerc[dep], "\n")] = 0;
+
+                            if (!verificarNome(clientes[posicao].nomeTerc[dep]))
+                            {
+                                printf("Nome invalido! Digite apenas letras.\n");
+                            }
+
+                        } while (!verificarNome(clientes[posicao].nomeTerc[dep]));
+                        break;
+                    case 3:
+                        do
+                        {
+                            printf("Nova data de nascimento do dependente: ");
+                            fgets(clientes[posicao].dataNascTerc[dep], 20, stdin);
+                            clientes[posicao].dataNascTerc[dep][strcspn(clientes[posicao].dataNascTerc[dep], "\n")] = 0;
+
+                        } while (!verificarData(clientes[posicao].dataNascTerc[dep]));
+                        break;
+
+                    default:
+                    printf("\nOpção Invalida.\n");
+                        break;
+                    }
+                } while (opcoes != 0);
+
             }
 
             break;
@@ -747,9 +831,15 @@ void removerCliente(Cliente clientes[], int *i)
         printf("%d - %s\n", j + 1, clientes[j].nome);
     }
 
-    printf("\nDigite o numero do cliente que deseja remover: \nDigite 0 para voltar\n");
+    printf("\nDigite o numero do cliente que deseja remover (0 para voltar): \n");
     scanf("%d", &posicao);
     getchar();
+
+    if (posicao == 0)
+    {
+        printf("\nVoltando...\n");
+        return;
+    }
 
     posicao--;
 

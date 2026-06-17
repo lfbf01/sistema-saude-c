@@ -16,32 +16,26 @@ int main()
     int i = 0; //Quantidade de clientes
     int escolha = -1;
 
-    while(escolha != 0)
+    do
     {
-        do{
-            printf("\n--- Núcleo Seguros ---\n");
-            printf("1 - Cadastrar Cliente\n");
-            printf("2 - Editar Cliente\n");
-            printf("3 - Remover Cliente\n");
-            printf("4 - Listagem Geral\n");
-            printf("5 - Listagem por Plano\n");
-            printf("6 - Listagem dos Vencimentos\n");
-            printf("0 - Sair\n");
-            printf("Escolha uma opcao: ");
 
-            scanf("%d", &escolha);
-            getchar();
+        printf("\n--- Núcleo Seguros ---\n");
+        printf("1 - Cadastrar Cliente\n");
+        printf("2 - Editar Cliente\n");
+        printf("3 - Remover Cliente\n");
+        printf("4 - Listagem Geral\n");
+        printf("5 - Listagem por Plano\n");
+        printf("6 - Listagem dos Vencimentos\n");
+        printf("0 - Sair\n");
+        printf("Escolha uma opcao: ");
 
-            if(escolha < 0 || escolha > 6)
-            {
-                printf("Opcao invalida.\n");
-            }
+        scanf("%d", &escolha);
+        getchar();
 
-        }while(escolha < 0 || escolha > 6);
-
-        if(escolha == 1)
+        switch (escolha)
         {
-            if(i >= 30)
+        case 1:
+            if (i >= 30)
             {
                 printf("\nLimite maximo de clientes atingido (30 clientes).\n");
                 printf("Nao e possivel cadastrar novos clientes.\n");
@@ -51,19 +45,18 @@ int main()
                 cadastrar(clientes, i);
                 i++;
             }
-        }
-        else if (escolha == 2)
-        {
-            editarCliente(clientes, i);
-        }
+            break;
 
-        else if (escolha == 3)
-        {
+        case 2:
+            editarCliente(clientes, i);
+            break;
+
+        case 3:
             removerCliente(clientes, &i);
-        }
-        else if(escolha == 4)
-        {
-            if(i == 0)
+            break;
+
+        case 4:
+            if (i == 0)
             {
                 printf("Nenhum cliente cadastrado.\n");
             }
@@ -71,18 +64,25 @@ int main()
             {
                 listagemGeral(clientes, i);
             }
-        }
-        else if(escolha == 5)
-        {
-            listarPorPlano(clientes, i);
-        }
-        else if(escolha == 6)
-        {
-            listarVencimentos(clientes, i);
-        }
-    }
+            break;
 
-    printf("\nPrograma encerrado. Ate logo!\n");
+        case 5:
+            listarPorPlano(clientes, i);
+            break;
+
+        case 6:
+            listarVencimentos(clientes, i);
+            break;
+
+        case 0:
+            printf("\nPrograma encerrado. Ate logo!\n");
+            break;
+
+        default:
+            printf("Opção invalida\n");
+        }
+
+    } while (escolha != 0);
 
     return 0;
 }
